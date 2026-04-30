@@ -2,7 +2,7 @@
 
 import { useState, Children } from 'react';
 
-const PAGE = 4;
+const perPageItems = 4;
 
 export default function Carousel({ children }: { children: React.ReactNode }) {
   const items = Children.toArray(children);
@@ -11,9 +11,9 @@ export default function Carousel({ children }: { children: React.ReactNode }) {
   const [index, setIndex] = useState(0);
 
   const canPrev = index > 0;
-  const canNext = index + PAGE < total;
+  const canNext = index + perPageItems < total;
 
-  const visible = items.slice(index, index + PAGE);
+  const visible = items.slice(index, index + perPageItems);
 
   return (
     <div className="relative flex items-center gap-4">
