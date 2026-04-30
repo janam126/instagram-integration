@@ -1,14 +1,17 @@
-import { fetchInstagramPosts } from '@/lib/instagram';
+import { fetchInstagramPosts, fetchInstagramProfile } from '@/lib/instagram';
 import InstagramCard from './InstagramCard';
 import Carousel from './Carousel';
 
 export default async function InstagramFeed() {
-  const posts = await fetchInstagramPosts(20);
+  const [posts, profile] = await Promise.all([
+    fetchInstagramPosts(20),
+    fetchInstagramProfile(),
+  ]);
 
   return (
     <Carousel>
-      {posts.map((post) => (
-        <InstagramCard key={post.id} post={post} />
+      {posts.map((post, i) => (
+        <InstagramCard key={post.id} post={post} profilePictureUrl={profile.profile_picture_url} priority={i < 4} />
       ))}
     </Carousel>
   );
